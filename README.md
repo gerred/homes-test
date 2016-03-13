@@ -6,6 +6,15 @@ No external dependencies outside of the stdlib.
 
 `go get github.com/gerred/homes-test`
 
+NOTE: If you don't have it already, add this to your `~/.gitconfig`:
+
+```
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+```
+
+This will enable you to `go get` private repositories.
+
 This will install the `homes-test` binary into your `$GOPATH/bin`.
 
 ## Run Tests
