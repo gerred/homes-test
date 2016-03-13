@@ -10,7 +10,7 @@ import (
 
 const dateFormat = "02/01/2006"
 
-// Property represents the
+// Property represents a single property and it's valuation
 type Property struct {
 	date      time.Time
 	id        int
