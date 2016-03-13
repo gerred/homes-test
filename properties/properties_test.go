@@ -44,10 +44,10 @@ Date,PropertyID,Address,RatesValuation($)
 	}
 
 	expected := Property{
-		date:      date,
-		id:        1,
-		address:   "4 Link Road, Wellington",
-		valuation: "$500,000",
+		Date:      date,
+		ID:        1,
+		Address:   "4 Link Road, Wellington",
+		Valuation: "$500,000",
 	}
 	actual := (*properties)[1][date]
 

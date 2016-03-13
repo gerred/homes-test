@@ -12,10 +12,10 @@ const dateFormat = "02/01/2006"
 
 // Property represents a single property and it's valuation
 type Property struct {
-	date      time.Time
-	id        int
-	address   string
-	valuation string
+	Date      time.Time
+	ID        int
+	Address   string
+	Valuation string
 }
 
 // Properties represents a collection of properties and their valuation over time
@@ -28,7 +28,7 @@ func (p *Properties) String() string {
 	buffer.WriteString("Date,PropertyID,Address,RatesValuation($)\n")
 	for _, propertyMap := range *p {
 		for _, property := range propertyMap {
-			buffer.WriteString(fmt.Sprintf("%s,%d,\"%s\",\"%s\"\n", property.date.Format(dateFormat), property.id, property.address, property.valuation))
+			buffer.WriteString(fmt.Sprintf("%s,%d,\"%s\",\"%s\"\n", property.Date.Format(dateFormat), property.ID, property.Address, property.Valuation))
 		}
 	}
 
@@ -55,11 +55,11 @@ func ParseCSV(reader *csv.Reader) (*Properties, error) {
 			return nil, err
 		}
 
-		if _, ok := properties[property.id]; !ok {
-			properties[property.id] = map[time.Time]Property{}
+		if _, ok := properties[property.ID]; !ok {
+			properties[property.ID] = map[time.Time]Property{}
 		}
 
-		properties[property.id][property.date] = *property
+		properties[property.ID][property.Date] = *property
 	}
 
 	return &properties, nil
