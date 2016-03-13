@@ -28,7 +28,7 @@ func (p *Properties) String() string {
 	buffer.WriteString("Date,PropertyID,Address,RatesValuation($)\n")
 	for _, propertyMap := range *p {
 		for _, property := range propertyMap {
-			buffer.WriteString(fmt.Sprintf("%s,%d,%s,%s\n", property.date.Format(dateFormat), property.id, property.address, property.valuation))
+			buffer.WriteString(fmt.Sprintf("%s,%d,\"%s\",\"%s\"\n", property.date.Format(dateFormat), property.id, property.address, property.valuation))
 		}
 	}
 
