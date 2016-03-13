@@ -38,6 +38,12 @@ Date,PropertyID,Address,RatesValuation($)
 21/01/2014,1,4 Link Road, Wellington,$480,000
 ```
 
+## Data cardinality / architecture
+
+In this exercise, the data structure was chosen based on the primary and secondary fields: propertyID and date, respectively. This is following the assumption that the "home" itself is the top level data structure, and it's changes over time are representative of that. Obviously, a relational database would be better in production because there may be questions that go past a single-home case (pricing trends of an area, for example), but we're cleaning CSVs for this test, not building a data warehouse.
+
+## Notes
+
 All property parsing logic is separated into the `properties` package, so it can be used however an implementer wants to use it.
 
 Given this is a code test and not real world, there are some caveats:
