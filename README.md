@@ -48,6 +48,6 @@ All property parsing logic is separated into the `properties` package, so it can
 
 Given this is a code test and not real world, there are some caveats:
 
-* This library is not concurrency safe at this time. Easiest way would be to add a sync.Mutex on Properties. In a production setting with multiple actors on the same map, this would be done with read and write locks.
+* This library is not concurrency safe at this time, mostly because it wasn't necessary for this exercise. Easiest way would be to add a sync.Mutex on Properties. In a production setting with multiple actors on the same map, this would be done with read and write locks.
 * Properties is built out of nested maps. Over a very large file, this would be extremely memory intensive. If working against an actual database or a backend API, this would be chunked out. For printing out records, this doesn't matter as much. In this instance, as well, the backend database would be handling duplicate records.
 * Valuation is represented as a string. This saved some code for the purposes of the test. If comparison of values is required (charting, analytics), it'd be easier to have used something like `golang.org/x/text/currency`, which has full CLDR version support and properly handles formatting (and properly handles sub-dollar amounts) beyond just using `int<x>` and manual formatting.
