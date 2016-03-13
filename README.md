@@ -18,7 +18,7 @@ This will install the `homes-test` binary into your `$GOPATH/bin`.
 
 Example output:
 
-`
+```
 Date,PropertyID,Address,RatesValuation($) 
 21/01/2015,2,6 Link Road, Wellington,$550,000 
 21/01/2014,2,6 Link Road, Wellington,$460,000 
@@ -27,7 +27,7 @@ Date,PropertyID,Address,RatesValuation($)
 21/01/2015,5,12 Link Road, Wellington,$510,000 
 21/01/2015,1,4 Link Road, Wellington,$500,000 
 21/01/2014,1,4 Link Road, Wellington,$480,000
-`
+```
 
 All property parsing logic is separated into the `properties` package, so it can be used however an implementer wants to use it.
 
