@@ -1,7 +1,6 @@
 package pipeline
 
 import (
-	"fmt"
 	"sync/atomic"
 	"testing"
 
@@ -79,8 +78,6 @@ func TestFilterChainSpyLast(t *testing.T) {
 	}
 
 	newProps := runFilterChain([]filter.Filter{removeIDFilter, spyFilter}, props, 10)
-	fmt.Println(newProps)
-	fmt.Println(len(newProps))
 
 	expectedFinalLength := len(props) - 1
 
