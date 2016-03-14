@@ -62,7 +62,7 @@ func (p *Pipeline) Run(input [][]string) (properties.Properties, error) {
 }
 
 func runFilterChain(filters []filter.Filter, p properties.Properties, chunkSize int) properties.Properties {
-	var props []*properties.Property
+	var props properties.Properties
 
 	for _, filter := range filters {
 		pChan := make(chan *properties.Property, len(p))
