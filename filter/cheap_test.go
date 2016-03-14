@@ -16,7 +16,7 @@ var propertiesTable = []struct {
 }{
 	{&properties.Property{Valuation: 500000}, false},
 	{&properties.Property{Valuation: 100000}, true},
-	{&properties.Property{Valuation: 300000}, true},
+	{&properties.Property{Valuation: 300000}, false},
 }
 
 func TestRemovesCheap(t *testing.T) {
