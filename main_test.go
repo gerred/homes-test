@@ -68,23 +68,8 @@ func TestIntegration(t *testing.T) {
 			t.Errorf("Count mismatch. Expected: %d, got: %d", len(ptt.output), len(properties))
 		}
 
-		matches := 0
-		expectedMatches := 9
-
-		// fmt.Println(ptt.output.String())
-		// sort.Sort(properties)
-		// fmt.Println(properties.String())
-
-		for _, prop := range properties {
-			for _, expectedProp := range ptt.output {
-				if reflect.DeepEqual(prop, expectedProp) {
-					matches++
-				}
-			}
-		}
-
-		if matches != expectedMatches {
-			t.Errorf("Expected %d matches, got %d", expectedMatches, matches)
+		if !reflect.DeepEqual(properties, ptt.output) {
+			t.Errorf("Mismatch. Expected: %v, got %v", ptt.output, properties)
 		}
 	}
 }
