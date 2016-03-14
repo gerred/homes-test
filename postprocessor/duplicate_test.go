@@ -39,10 +39,6 @@ func TestRemovesDuplicates(t *testing.T) {
 		if len(properties) != pp.expectedLength {
 			t.Errorf("Duplicates postprocessor. Expected length: %d, got: %d", pp.expectedLength, len(properties))
 		}
-		// expected := prop == nil
-		// if expected != pp.filtered {
-		// 	t.Errorf("Cheap filtered. Expected: %t, want: %t", expected, pp.filtered)
-		// }
 	}
 }
 
