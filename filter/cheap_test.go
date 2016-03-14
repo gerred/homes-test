@@ -14,6 +14,7 @@ var propertiesTable = []struct {
 	property *properties.Property
 	filtered bool
 }{
+	{nil, true},
 	{&properties.Property{Valuation: 500000}, false},
 	{&properties.Property{Valuation: 100000}, true},
 	{&properties.Property{Valuation: 300000}, false},

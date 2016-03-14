@@ -14,6 +14,7 @@ var suffixesTable = []struct {
 	property *properties.Property
 	filtered bool
 }{
+	{nil, true},
 	{&properties.Property{Address: "51 Wanaka Pl"}, false},
 	{&properties.Property{Address: "10 Test AVE"}, true},
 	{&properties.Property{Address: "10 Test Cres"}, true},

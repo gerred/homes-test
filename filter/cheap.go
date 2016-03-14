@@ -9,7 +9,7 @@ type CheapFilter struct {
 
 // Run executes the CheapFilter
 func (c *CheapFilter) Run(p *properties.Property) *properties.Property {
-	if p.Valuation < c.Under {
+	if p == nil || p.Valuation < c.Under {
 		return nil
 	}
 	return p

@@ -13,6 +13,10 @@ type SuffixFilter struct {
 
 // Run executes the CheapFilter
 func (s *SuffixFilter) Run(p *properties.Property) *properties.Property {
+	if p == nil {
+		return nil
+	}
+
 	splitAddress := strings.Split(p.Address, " ")
 	suffix := splitAddress[len(splitAddress)-1]
 
