@@ -52,8 +52,20 @@ func (p *Pipeline) Run(input [][]string) (properties.Properties, error) {
 		}
 	}
 
-	for _, filter := range p.filters {
-		pChan := make(chan *properties.Property, len(p.properties))
+	p.properties = runFilterChain(p.filters, p.properties, p.ChunkSize)
+
+	for _, postproc := range p.postprocessors {
+		p.properties = postproc.Run(p.properties)
+	}
+
+	return p.properties, nil
+}
+
+func runFilterChain(filters []filter.Filter, p properties.Properties, chunkSize int) properties.Properties {
+	var props []*properties.Property
+
+	for _, filter := range filters {
+		pChan := make(chan *properties.Property, len(p))
 		var wg sync.WaitGroup
 
 		var filterChunk = func(c []*properties.Property) {
@@ -67,9 +79,9 @@ func (p *Pipeline) Run(input [][]string) (properties.Properties, error) {
 		}
 
 		chunk := []*properties.Property{}
-		for i := 0; i < len(p.properties); i++ {
-			chunk = append(chunk, p.properties[i])
-			if len(chunk) == p.ChunkSize {
+		for i := 0; i < len(p); i++ {
+			chunk = append(chunk, p[i])
+			if len(chunk) == chunkSize {
 				wg.Add(1)
 				go filterChunk(chunk)
 				chunk = []*properties.Property{}
@@ -80,7 +92,7 @@ func (p *Pipeline) Run(input [][]string) (properties.Properties, error) {
 		wg.Wait()
 
 		close(pChan)
-		props := []*properties.Property{}
+		props = []*properties.Property{}
 
 	appendProperties:
 		for {
@@ -92,12 +104,6 @@ func (p *Pipeline) Run(input [][]string) (properties.Properties, error) {
 			}
 		}
 
-		p.properties = props
 	}
-
-	for _, postproc := range p.postprocessors {
-		p.properties = postproc.Run(p.properties)
-	}
-
-	return p.properties, nil
+	return props
 }
