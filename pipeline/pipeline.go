@@ -1,7 +1,6 @@
 package pipeline
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/gerred/homes-test/filter"
@@ -71,7 +70,6 @@ func runFilterChain(filters []filter.Filter, p properties.Properties, chunkSize 
 			for _, property := range c {
 				val := filter.Run(property)
 				if val != nil {
-					fmt.Println("adding property to pChan")
 					pChan <- property
 				}
 			}
