@@ -93,11 +93,10 @@ func runFilterChain(filters []filter.Filter, p properties.Properties, chunkSize 
 	appendProperties:
 		for {
 			prop, more := <-pChan
-			if more {
-				p = append(p, prop)
-			} else {
+			if !more {
 				break appendProperties
 			}
+			p = append(p, prop)
 		}
 
 	}
