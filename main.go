@@ -5,21 +5,46 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gerred/homes-test/properties"
+	"github.com/gerred/homes-test/filter"
+	"github.com/gerred/homes-test/pipeline"
+	"github.com/gerred/homes-test/postprocessor"
 )
 
 func main() {
 	filename := os.Args[1]
 
-	inFile, err := os.Open(filename)
-	defer inFile.Close()
+	in, err := os.Open(filename)
+	defer in.Close()
 
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	properties, err := properties.ParseCSV(csv.NewReader(inFile))
+	csvFile := csv.NewReader(in)
+	data, err := csvFile.ReadAll()
 
-	fmt.Println(properties)
+	dataNoHeader := data[1:]
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	pipeline := pipeline.DefaultPipeline
+
+	pipeline.RegisterFilter(&filter.CheapFilter{Under: 700000})
+	pipeline.RegisterFilter(&filter.SuffixFilter{Suffixes: []string{"AVE", "CRES", "PL"}})
+
+	pipeline.RegisterPostprocessor(&postprocessor.Duplicate{})
+	pipeline.RegisterPostprocessor(&postprocessor.Index{Modulo: 10})
+
+	properties, err := pipeline.Run(dataNoHeader)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println(properties.String())
 }
