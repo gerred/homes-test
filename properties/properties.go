@@ -25,10 +25,22 @@ func (p *Property) String() string {
 // Properties represents a collection of properties and their valuation over time
 type Properties []*Property
 
-func (p *Properties) String() string {
+func (slice Properties) Len() int {
+	return len(slice)
+}
+
+func (slice Properties) Less(i, j int) bool {
+	return slice[i].ID < slice[j].ID
+}
+
+func (slice Properties) Swap(i, j int) {
+	slice[i], slice[j] = slice[j], slice[i]
+}
+
+func (slice *Properties) String() string {
 	var buffer bytes.Buffer
 
-	for _, r := range *p {
+	for _, r := range *slice {
 		buffer.WriteString(fmt.Sprintf("%s\n", r))
 	}
 

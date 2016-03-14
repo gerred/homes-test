@@ -1,6 +1,7 @@
 package pipeline
 
 import (
+	"sort"
 	"sync"
 
 	"github.com/gerred/homes-test/filter"
@@ -53,10 +54,7 @@ func (p *Pipeline) Run(input [][]string) (properties.Properties, error) {
 	}
 
 	p.properties = runFilterChain(p.filters, p.properties, p.ChunkSize)
-
-	for _, postproc := range p.postprocessors {
-		p.properties = postproc.Run(p.properties)
-	}
+	p.properties = runPostprocessorChain(p.postprocessors, p.properties)
 
 	return p.properties, nil
 }
@@ -103,5 +101,14 @@ func runFilterChain(filters []filter.Filter, p properties.Properties, chunkSize 
 		}
 
 	}
+	return p
+}
+
+func runPostprocessorChain(pp []postprocessor.Postprocessor, p properties.Properties) properties.Properties {
+	for _, postproc := range pp {
+		p = postproc.Run(p)
+		sort.Sort(p)
+	}
+
 	return p
 }
