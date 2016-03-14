@@ -1,6 +1,7 @@
 package pipeline
 
 import (
+	"fmt"
 	"sync"
 
 	"github.com/gerred/homes-test/filter"
@@ -62,8 +63,6 @@ func (p *Pipeline) Run(input [][]string) (properties.Properties, error) {
 }
 
 func runFilterChain(filters []filter.Filter, p properties.Properties, chunkSize int) properties.Properties {
-	var props properties.Properties
-
 	for _, filter := range filters {
 		pChan := make(chan *properties.Property, len(p))
 		var wg sync.WaitGroup
@@ -72,6 +71,7 @@ func runFilterChain(filters []filter.Filter, p properties.Properties, chunkSize 
 			for _, property := range c {
 				val := filter.Run(property)
 				if val != nil {
+					fmt.Println("adding property to pChan")
 					pChan <- property
 				}
 			}
@@ -92,18 +92,18 @@ func runFilterChain(filters []filter.Filter, p properties.Properties, chunkSize 
 		wg.Wait()
 
 		close(pChan)
-		props = []*properties.Property{}
+		p = []*properties.Property{}
 
 	appendProperties:
 		for {
-			p, more := <-pChan
+			prop, more := <-pChan
 			if more {
-				props = append(props, p)
+				p = append(p, prop)
 			} else {
 				break appendProperties
 			}
 		}
 
 	}
-	return props
+	return p
 }
