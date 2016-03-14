@@ -33,7 +33,7 @@ func main() {
 
 	pipeline := pipeline.DefaultPipeline
 
-	pipeline.RegisterFilter(&filter.CheapFilter{Under: 700000})
+	pipeline.RegisterFilter(&filter.CheapFilter{Under: 400000})
 	pipeline.RegisterFilter(&filter.SuffixFilter{Suffixes: []string{"AVE", "CRES", "PL"}})
 
 	pipeline.RegisterPostprocessor(&postprocessor.Duplicate{})
