@@ -1,3 +1,14 @@
+Test #2.
+Instead of inserting the last record, make sure that no duplicates are entered at all. ie, if there is a duplicate record, do not insert any rows.
+
+Test #3.
+Modify the codebase to split the validated (non-duplicate) records into chunks, and 'process' each chunk via its own goroutine. Process is defined as: 
+ 1. Filter out cheap properties (anything under 400k)
+ 2. Filter out properties that are avenues, crescents, or places (AVE, CRES, PL) cos those guys are just pretentious...
+ 3. Filter out every 10th property (to keep our users on their toes!)
+
+Combine the results of the 'processes' back into a single list, and print the list.
+
 Small CLI utility to parse valuation data from (potentially duplicated) homes data. Pricing is determined by the last record read from a given date and property id.
 
 No external dependencies outside of the stdlib.
