@@ -7,7 +7,7 @@ type Index struct {
 	Modulo int
 }
 
-// Run executes the Duplicate postprocessor
+// Run executes the Index postprocessor
 func (ind *Index) Run(p properties.Properties) properties.Properties {
 	newProps := properties.Properties{}
 
